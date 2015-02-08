@@ -44,7 +44,7 @@ g) Responsive layout (works in both desktop and mobile devices)<br >
 		Content renders in mobile devices separately (CSS)<br ><br >
 
 #Reference resources
-Primary reference when I am stuck: http://stackoverflow.com/
+Primary reference when I am stuck: <br />http://stackoverflow.com<br /><br />
 Google Maps API: <br >https://developers.google.com/maps/documentation/javascript/reference<br ><br >
 KnockoutJS:<br >http://knockoutjs.com/documentation/introduction.html<br ><br >
 Foursquare API:<br >https://developer.foursquare.com/start<br ><br >
