@@ -84,8 +84,8 @@
 						response($.map(data.response.minivenues, function (item) {
 
 							// Makes sure suggestions are for the current city and state.
-							if (item.location.city === model.neighborhood.city &&
-								item.location.state === model.neighborhood.state) {
+							if (item.location.city === Data.neighborhood.city &&
+								item.location.state === Data.neighborhood.state) {
 
 								return {
 									name: item.name,
@@ -136,9 +136,9 @@
 		minLength: 3,
 		select: function(event, ui) {},
 		search: function (event, ui) {
-			viewModel.clearPlaces();
-			viewModel.addPlaces(ui);
-			viewModel.setPlace(viewModel.places()[0]);
+			pageControls.clearPlaces();
+			pageControls.addPlaces(ui);
+			pageControls.setPlace(pageControls.places()[0]);
 
 			return false;
 		}

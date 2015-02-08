@@ -94,7 +94,7 @@ var Place = function(place) {
 		'?ref="' + Data.foursquareOptions.client_id;
 
 	// Content to be displayed in the marker infowindow.
-	this.content = '<div class="content"><h3><a href=' + this.url + '>' +
+	this.content = '<div class="content"><h3><a target=\'fsWin\' href=' + this.url + '>' +
 		this.name + '</a></h3><h4>' + placeInfo.location.address + '<br>' +
 		placeInfo.location.city + placeInfo.location.state +
 		placeInfo.location.zip + '</h4></div>';
