@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<title>Neighborhood Map</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="author" content="Bhaskar Thatraju">
+	<meta name="description" content="Neighborhood Map Project">
+
+	<!-- Load CSS -->
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Embedd map -->
+<div data-bind="attr: {class: 'map'}"></div>
+
+<!-- The search view. -->
+<section data-bind="attr: {class: 'search ui-widget'}">
+	<div style="padding-top: 5%">
+		<form data-bind="submit: search">
+			<label>
+				<!-- Syncs search query, clears on click, and adds placeholder. Disabled autocomplete so it won't get in the way on mobile. -->
+				<input data-bind="click: clearQuery, textInput: query, 
+								attr: {placeholder: 'Search for a Place or Category;  Ex: FOOD',
+								class: 'ui-autocomplete-input',
+								type: 'search',
+								autocomplete: 'off'}" />
+
+				<!-- Search button. -->
+				<button data-bind="attr: {class: 'search-button', type: 'submit'}">
+					<!-- Search button image. -->
+					<img data-bind="attr: {src: 'http://findicons.com/files/icons/1786/oxygen_refit/128/gnome_search_tool.png', alt: 'Search', width: 30, height: 30}">
+				</button>
+			</label>
+		</form>
+	</div>
+</section>
+
+<!-- Places panel. -->
+<section data-bind="attr: {class: 'places'}">
+
+	<!-- Running text for Places comes from Foursquare status -->
+	<h2 data-bind="visible: places().length === 0, text: fsStatus"></h2>
+
+	<!-- Toggle places window when the lists are not empty -->
+	<h2 data-bind="visible: places().length > 0, click: toggleView(showPlaces),
+					attr:{class: 'runningText'}, text: showPlaces() ? '[ - ] Hide Places' : '[ + ] Show Places'"></h2>
+
+	<!-- Drop down list, displays all Categories and places -->
+	<select data-bind="options: categories, optionsCaption: 'Select All', value: selectedCategory, attr: {class: 'filter'}"></select><br />
+
+	<!-- Show places based on search criteria. -->
+	<ul data-bind="visible: showPlaces(), template: {foreach: filterList, beforeRemove: hideItem, afterAdd: showItem}, attr: {class: 'list'}">
+		
+		<!-- populates places list; highlights an active state for the list item either by clicking on the list or place icon on the map  -->
+		<li data-bind="text: name, click: $parent.setPlace, attr: {id: id, class: 'item'}, css: {'selected': $data === $parent.place()}"></li>
+	</ul>
+</section>
+
+<!-- Wiki Panel. -->
+<section data-bind="attr: {class: 'wikis'}">
+
+	<!-- Running text for Wiki status -->
+	<h2 data-bind="visible: wikis().length === 0, text: wkStatus"></h2>
+
+	<!-- Toggle Wiki list -->
+	<h2 data-bind="visible: wikis().length > 0, click: toggleView(showWikis), attr:{class: 'runningText'}, text: showWikis() ? '[ - ] Hide Wikis' : '[ + ] Show Wikis'"></h2>
+
+	<!-- Displays wikis when available for the city. -->
+	<ul data-bind="visible: showWikis(), template: {foreach: wikis, afterAdd: showItem}, attr: {class: 'list'}">
+
+		<!-- Displays the wiki title and a link to the full article. -->
+		<li data-bind="attr: {class: 'item'}">
+			<a data-bind="text: name, attr: {href: url, class: 'wiki-link'}"></a>
+		</li>
+	</ul>
+</section>
+
+<!-- The weather view. -->
+<section data-bind="attr: {class: 'weather'}">
+
+	<!-- This header shows during loading and errors. -->
+	<h2 data-bind="visible: !weather(), text: WUStatus"></h2>
+
+	<!-- This header shows when there is weather, toggles the hide/show
+	of the weather on click, and changes the header title based on the toggle. -->
+	<h2 data-bind="visible: weather(),
+					click: toggleView(showWeather),
+					attr:{class: 'runningText'},
+					text: showWeather() ? '[-] Hide Weather' : '[+] Show Weather'"></h2>
+
+	<!-- Displays current weather details when available for the city. -->
+	<div data-bind="with: weather, visible: $root.showWeather(), attr: {class: 'weather-details'}">
+		<div>
+			<!-- Dynamic icon and text for the current weather conditions. -->
+			<img data-bind="attr: {src: icon, alt: 'Weather Condition Icon'}"><br />
+			<span data-bind="text: condition"></span>
+		</div>
+		<!-- Dynamic current temperatures for the city. -->
+		<div data-bind="attr: {class: 'temp'}" style="padding-top:0px;">
+			<a data-bind="text: loc, attr: {href: forecastUrl}" target="_blank" style="text-align:center"></a><br />
+			<span data-bind="text: temp"></span><br />
+			<span data-bind="text: feel"></span>
+		</div>
+	</div>
+</section>
+
+<!-- The required Foursquare attribution logo. -->
+<section>
+	<a data-bind="attr: {href: 'https://foursquare.com/'}" target="_blank">
+		<img data-bind="attr: {class: 'foursquare-logo',
+								src: 'https://ss0.4sqi.net/img/poweredByFoursquare/poweredby-black-' +
+									'61edb20ca5dd6afc0ef0ceea8d2ee750.png',
+								alt: 'Foursquare Logo'}">
+	</a>
+</section>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCxaLgUznvI_hpyQ-pnT08MhrAF6xxnKeU"></script>
+<script src="js/lib/jquery-2.1.1.min.js"></script>
+<script src="js/lib/jquery-ui.min.js"></script>
+<script async src="js/lib/knockout-3.2.0.js"></script>
+<script async src="js/lib/4sqacplugin.js"></script>
+<script async src="js/data.js"></script>
+<script async src="js/nhvcontrol.js"></script>
+<script async src="js/app.js"></script>
+
+</body>
+</html>
