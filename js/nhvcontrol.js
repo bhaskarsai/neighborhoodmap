@@ -28,6 +28,9 @@ var NeighborhoodViewModel = function() {
 	this.wkStatus = ko.observable();  //Wikipedia Status
 	this.WUStatus = ko.observable();  //Weather underground status
 	this.fsStatus = ko.observable();  //FourSquare status
+	this.mapLoadStatus = ko.observable(); //ERROR Handling for google map loading
+	this.msgReloadPlaces = ko.observable(false); //Default flag for places reload
+	this.msgStatus = ko.observable() //Places reload statu message
 
 	//Method filterList() Adds/removes markers when selecting a filter.	 
 	this.filterList = ko.pureComputed(function() {
@@ -52,13 +55,27 @@ var NeighborhoodViewModel = function() {
 		});
 	});
 
+	this.resetPlaces = function(){
+		if(s.places().length <= 1){
+			s.msgReloadPlaces(true);
+			s.msgStatus("Please wait, places are re-loading...");
+			//Blank query
+			s.query('');
+			s.getPlaces();
+		}
+	}
+
 	//Method setPlace(Selected_Place); Bounces marker, highlights list item, and opens content on clicked place.
 	this.setPlace = function(p) {
 
 		// Removes place, bounce, and content if you click the current place.
 		if (s.place() === p) {
-			s.removePlace();
-
+			if(s.places().length === 1){
+				s.places().length = 0;
+				s.removePlace();
+				s.resetPlaces();
+			}
+			//check if user clicked when all places are visible
 		} else {
 			s.removePlace();
 			s.place(p);
@@ -210,7 +227,15 @@ var NeighborhoodViewModel = function() {
 
 	//Method clearQuery(); clears query when submitting search query
 	this.clearQuery = function() {
-		s.query('');
+
+		if(s.query() == ""){
+			//alert("Empty");
+		}else{
+			$( ".search-button" ).focus();
+			s.query('');
+			s.resetPlaces();
+			$( ".ui-autocomplete-input" ).focus();
+		}
 	};
 
 	//Method getPlaces();  Get Places list via foursquare API
@@ -234,10 +259,12 @@ var NeighborhoodViewModel = function() {
 
 				// Displays an error message when no matches.
 				if (r.response.totalResults === 0) {
+					alert("No results found");
 					s.fsStatus('No Foursquare matches');
 				} else {
 					// Adds places that match.
 					s.addPlaces(r.response.groups[0].items);
+					s.msgReloadPlaces(false);
 				}
 
 				//clear interval when the following line executes
@@ -251,7 +278,6 @@ var NeighborhoodViewModel = function() {
 
 		//Set default weather status text 
 		s.WUStatus('Weather search for Irving, Tx');
-		
 		// Displays an error message after 10 seconds of no response.
 		var wrt = setTimeout(function() {
 				s.WUStatus('Weather Underground is not responding');

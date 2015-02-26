@@ -13,16 +13,23 @@ var infowindow = new google.maps.InfoWindow(),
 
 //Create MAP View
 var InitLocation = function(lat, lng) {
-
 	//Define Map Features
 	var mapFeatures = {
 		zoom: 10,
 		disableDefaultUI: true,
-		scrollwheel: false,
+		scrollwheel: true,
 		mapTypeControl: false,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		center: new google.maps.LatLng(lat, lng)
+		center: new google.maps.LatLng(lat, lng),
+		zoomControl: true,
+		zoomControlOptions: {
+      		style: google.maps.ZoomControlStyle.SMALL,
+      		position: google.maps.ControlPosition.RIGHT_BOTTOM
+    	}
 	};
+
+	//Initialize loading of the map
+	pageControls.mapLoadStatus("Map loading initialized...");
 
 	//Create Map Instance
 	map = new google.maps.Map($('.map')[0], mapFeatures);
@@ -35,6 +42,23 @@ var InitLocation = function(lat, lng) {
 	//Reset the item active state in the Places list window
 	google.maps.event.addListener(infowindow,'closeclick', function() {
 		pageControls.setPlace(pageControls.place());
+	});
+
+	//Check if the Map is failed to load:  
+	//Following timer will run for every one minute until it's cleared off by "tilesloaded" event.
+	//Reference-Events http://gmaps-samples-v3.googlecode.com/svn/trunk/map_events/map_events.html
+	var mapTimer = setTimeout(function() {
+		pageControls.mapLoadStatus('Google Maps is taking time to load or not loading');
+	}, 60000);
+
+	// remove timer event upon successful tiles load.
+	google.maps.event.addListener(map,'tilesloaded', function() {
+
+		//Map is fully loaded
+		clearTimeout(mapTimer);
+
+		//Empty mapLoadStatus
+		pageControls.mapLoadStatus('');
 	});
 };
 
@@ -90,14 +114,21 @@ var Place = function(place) {
 	this.marker = new google.maps.Marker(markerOptions);
 
 	// Link to Foursquare venue with required reference code.
-	this.url = '"http://foursquare.com/v/' + this.id +
-		'?ref="' + Data.foursquareOptions.client_id;
+	this.url = '"http://foursquare.com/v/' + this.id + '?ref="' + Data.foursquareOptions.client_id;
+
+	//Get WIKI URL
+	var wCity = placeInfo.location.city;
+
+	//Remove ',' from the city
+	wCity = wCity.substring(0, wCity.length-2);
+
+	this.wikiURL = "http://en.wikipedia.org/wiki/"+wCity
 
 	// Content to be displayed in the marker infowindow.
 	this.content = '<div class="content"><h3><a target=\'fsWin\' href=' + this.url + '>' +
 		this.name + '</a></h3><h4>' + placeInfo.location.address + '<br>' +
 		placeInfo.location.city + placeInfo.location.state +
-		placeInfo.location.zip + '</h4></div>';
+		placeInfo.location.zip + '</h4><br /><a target="_new" href="'+ this.wikiURL +'">Wiki on '+ wCity +'</a></div>';
 
 	// Sends the category to the viewModel to process.
 	pageControls.addCategory(this.category);

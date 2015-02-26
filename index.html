@@ -12,7 +12,8 @@
 	<meta name="description" content="Neighborhood Map Project">
 
 	<!-- Load CSS -->
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="http://rawgit.com/bhaskarsai/neighborhoodmap/master/css/style.css">
+	<link rel="stylesheet" href="http://rawgit.com/bhaskarsai/neighborhoodmap/master/css/jquery-ui.css">
 </head>
 
 <body>
@@ -37,6 +38,9 @@
 					<!-- Search button image. -->
 					<img data-bind="attr: {src: 'http://findicons.com/files/icons/1786/oxygen_refit/128/gnome_search_tool.png', alt: 'Search', width: 30, height: 30}">
 				</button>
+			</label>
+			<label>
+				<div data-bind="visible: msgReloadPlaces, text: msgStatus" style="background-color:#ffc"></div>
 			</label>
 		</form>
 	</div>
@@ -63,24 +67,25 @@
 	</ul>
 </section>
 
-<!-- Wiki Panel. -->
+<!-- Wiki Panel.
 <section data-bind="attr: {class: 'wikis'}">
 
-	<!-- Running text for Wiki status -->
+	-- Running text for Wiki status
 	<h2 data-bind="visible: wikis().length === 0, text: wkStatus"></h2>
 
-	<!-- Toggle Wiki list -->
+	-- Toggle Wiki list
 	<h2 data-bind="visible: wikis().length > 0, click: toggleView(showWikis), attr:{class: 'runningText'}, text: showWikis() ? '[ - ] Hide Wikis' : '[ + ] Show Wikis'"></h2>
 
-	<!-- Displays wikis when available for the city. -->
+	-- Displays wikis when available for the city.
 	<ul data-bind="visible: showWikis(), template: {foreach: wikis, afterAdd: showItem}, attr: {class: 'list'}">
 
-		<!-- Displays the wiki title and a link to the full article. -->
+		--Displays the wiki title and a link to the full article.
 		<li data-bind="attr: {class: 'item'}">
 			<a target="wkWin" data-bind="text: name, attr: {href: url, class: 'wiki-link'}"></a>
 		</li>
 	</ul>
 </section>
+-->
 
 <!-- The weather view. -->
 <section data-bind="attr: {class: 'weather'}">
@@ -120,15 +125,14 @@
 								alt: 'Foursquare Logo'}">
 	</a>
 </section>
-
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCxaLgUznvI_hpyQ-pnT08MhrAF6xxnKeU"></script>
-<script src="js/lib/jquery-2.1.1.min.js"></script>
-<script src="js/lib/jquery-ui.min.js"></script>
-<script async src="js/lib/knockout-3.2.0.js"></script>
-<script async src="js/lib/4sqacplugin.js"></script>
-<script async src="js/data.js"></script>
-<script async src="js/nhvcontrol.js"></script>
-<script async src="js/app.js"></script>
+<script src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/lib/jquery-2.1.1.min.js"></script>
+<script src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/lib/jquery-ui.min.js"></script>
+<script async src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/lib/knockout-3.2.0.js"></script>
+<script async src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/lib/4sqacplugin.js"></script>
+<script async src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/data.js"></script>
+<script async src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/nhvcontrol.js"></script>
+<script async src="http://rawgit.com/bhaskarsai/neighborhoodmap/master/js/app.js"></script>
 
 </body>
 </html>

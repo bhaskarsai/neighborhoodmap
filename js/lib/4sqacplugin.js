@@ -23,7 +23,6 @@
 	$.foursquareAutocomplete = function (element, options) {
 		this.options = {};
 		element.data('foursquareAutocomplete', this);
-
 		/** Initiates the combination of the options.
 	 	 * @param element The element instantiated.
 	 	 * @param options The user defined options.
@@ -106,14 +105,15 @@
 				});
 			},
 			select: function (event, ui) {
-
 				// Triggers a function when an item is clicked.
 				options.search(event, [ui.item]);
 				return false;
 			},
+			
 			open: function () {
 				$(this).removeClass('ui-corner-all').addClass('ui-corner-top');
 			},
+			
 			close: function () {
 				$(this).removeClass('ui-corner-top').addClass('ui-corner-all');
 			}
@@ -123,7 +123,7 @@
 		.data('ui-autocomplete')._renderItem = function (ul, item) {
 			return $('<li></li>')
 			.data('ui-autocomplete-item', item)
-			.append('<a>' + getAutocompleteText(item) + '</a>')
+			.append('<a href="#" style="text-decoration:none">' + getAutocompleteText(item) + '</a>')
 			.appendTo(ul);
 		};
 
@@ -139,19 +139,13 @@
 			pageControls.clearPlaces();
 			pageControls.addPlaces(ui);
 			pageControls.setPlace(pageControls.places()[0]);
-
 			return false;
 		}
 	};
 
 	/// Creates the <li> elements for the suggestions.
 	function getAutocompleteText(item) {
-		var text = '<div><img class ="ui-menu-icon" src="' + item.photo +
-		'">' + '<div class="ui-widget-header">' + item.name + '</div>' +
-		'<div class="ui-widget-content">' + item.address + '</div>' +
-		'<div class="ui-widget-content">' + item.city + item.state + item.zip +
-		'</div>' + '</div>';
-
+		var text = '<div style="background-color:#ccc"><img class ="ui-menu-icon" src="' + item.photo +'">' + '<div class="ui-widget-header">' + item.name + '<br />' + item.city + item.state + item.zip + '<hr /></div>';
 		return text;
 	}
 })(jQuery);

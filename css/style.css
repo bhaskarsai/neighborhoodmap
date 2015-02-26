@@ -6,7 +6,7 @@
 	margin: 0;
 	padding: 0;
 	text-align: center;
-	font: 100%/normal "Roboto", sans-serif;
+	font: 100%/1.5em "Roboto", sans-serif;
 }
 
 /* Blue header for show_hide titles */
@@ -15,14 +15,13 @@
 	color:#fff;
 	font-weight:600
 }
-
-/* Generals styles */
+/* General styles */
 li,
-.ui-widget-header,
-.ui-autocomplete-input {
+.ui-widget-header {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	background-color: #fff;
 }
 
 .places,
@@ -37,7 +36,7 @@ li,
 .places,
 .foursquare-logo,
 .weather,
-.search {
+.ui-widget {
 	position: fixed;
 }
 
@@ -46,12 +45,16 @@ li,
 	height: 2.25em;
 }
 
-
+/*.foursquare-logo,*/
 .places {
 	right: 0;
 }
 
+.foursquare-logo{
+	left: 0;
+}
 .search,
+.ui-widget,
 .places {
 	top: 0;
 }
@@ -72,21 +75,27 @@ body,
 .map {
 	height: 100%;
 	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	top: 0;
 }
 
 /* Header styles. */
-h2 {
+h1 {
 	background: #ffa500;
 	cursor: pointer;
 }
 
 /* Map infowindow styles. */
 .content {
-	width: 9.5em;
+	width: 10em;
+	padding: 0 .75em 0 0;
 }
 
 /* Search styles. */
-.search {
+.ui-widget {
 	display: inline;
 	left: 33.33%;
 	width: 25%;
@@ -106,33 +115,37 @@ h2 {
 
 .ui-menu {
 	width: 22.5%;
-	padding: 0 0 .75em .5em;
-	max-height: 82%
+	max-height: 80%;
 }
 
 .ui-menu-icon {
-	height: 1.375em;
-	width: 1.375em;
+	height: 1.6em;
+	width: 1.6em;
 	float: left;
 }
 
+.ui-widget-header {
+	margin-bottom: .5em;
+}
+
 /* Wikis section styles. */
+.foursquare-logo,
 .wikis {
 	bottom: 3%;
 }
 
 /* Wiki and places list styes. */
 .list {
-	background: #ccc;
+	background: #fcc;
 	max-width: 13em;
 	padding: .8125em;
 }
 
 .item {
-	font: bold .75em/normal "Roboto", sans-serif;
+	font: bold .75em/1.5em "Roboto", sans-serif;
 	max-height: 2.375em;
-	margin: .25em 0;
-	padding: 1em .5em 2.125em;
+	margin: .4em 0;
+	padding: .75em .5em 2em;
 	cursor: pointer;
 }
 
@@ -146,9 +159,7 @@ h2 {
 }
 
 .foursquare-logo {
-	bottom:	.5%;
-	left:0;
-	top:0;
+	bottom:	.6%;
 }
 
 /* Weather section styles. */
@@ -168,92 +179,161 @@ h2 {
 
 /* Media query styles */
 @media screen and (max-width: 479px) {
-	.places,
-	.wikis,
-	.weather,
-	.search {
-		font: .3em/normal "Roboto", sans-serif;
-	}
-
-	.search {
+	.ui-widget {
 		width: 56%;
 		left: 0;
 	}
 
-	.ui-autocomplete-input {
-		width: 91%;
+	.weather,
+	.wikis {
+		max-width: 48%;
+		max-height: 83%;
 	}
 
-	.weather {
-		right: 0;
+	.places {
+		max-height: 80%;
+		max-width: 42%
+	}
+
+	.ui-autocomplete-input,
+	.search-button {
+		height: 1.5em;
+	}
+
+	.search-button {
+		width: 1.5em;
+	}
+
+	.ui-widget-header {
+		font: .6em/1.5em "Roboto", sans-serif;
+	}
+
+	.ui-menu-icon {
+		height: .95em;
+		width: .95em;
 	}
 
 	.weather-details {
 		display: block;
+		font: .8em/1.5em "Roboto", sans-serif;
+	}
+
+	.foursquare-logo,
+	.wikis,
+	.weather {
+		bottom: 8%;
+	}
+
+	.weather {
+		right: 0;
 	}
 }
 
 @media screen and (min-width: 480px) and (max-width: 639px) {
-	.places,
-	.wikis,
-	.weather,
-	.search {
-		font: .4em/normal "Roboto", sans-serif;
-		max-height: 45%;
+	.wikis {
+		max-width: 30%;
+		max-height: 66%;
 	}
 
-	.search {
-		width: 38%;
+	.places {
+		max-width: 32%;
+		max-height: 82%;
+		z-index: 2;
+	}
+
+	.ui-widget {
+		width: 50%;
+		left: 0;
+	}
+
+	.ui-menu-icon {
+		height: 1.3em;
+		width: 1.3em;
+	}
+
+	.ui-widget-header {
+		font: .8em/1.5em "Roboto", sans-serif;
+	}
+
+	.foursquare-logo,
+	.wikis,
+	.weather {
+		bottom: 13%;
 	}
 
 	.weather {
-		right: 35%;
+		right: 20%;
+		max-height: 50%;
+		max-width: 75%;
+		z-index: 1;
+	}
+
+	.weather-details {
+		font: .8em/1.5em "Roboto", sans-serif;
 	}
 
 	.temp {
-		padding: 3em .5em 0;
+		padding: 1.75em .5em 0;
 	}
 }
 
-@media screen and (max-width: 1024px) {
-	h2 {
-		height: 2.5em;
-		padding: .75em;
+@media screen and (min-width: 640px) and (max-width: 768px) {
+	.ui-widget {
+		left: 12%;
+		width: 50%;
 	}
 
-	.places,
-	.wikis,
-	.weather,
-	.search,
-	.ui-menu {
-		max-height: 80%;
-		font: .5em/normal "Roboto", sans-serif;
+	.weather {
+		right: 29.5%;
+		max-width: 50%;
 	}
 
-	.search,
+	.weather-details {
+		font: .8em/1.5em "Roboto", sans-serif;
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+	.ui-widget {
+		left: 16%;
+		width: 50%;
+	}
+
+	.weather {
+		right: 33%;
+	}
+
+	.foursquare-logo,
+	.wikis {
+		bottom: 4%;
+	}
+
+	.places {
+		max-height: 90%;
+	}
+}
+
+@media screen and (max-width: 1136px) {
+	h1 {
+		padding: .5em;
+		font: 1em/1.5em "Roboto", sans-serif;
+	}
+
+	.ui-widget,
 	.places {
 		top: 2%;
 	}
 
-	.map {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		top: 0;
-	}
-
-	.wikis,
-	.weather {
-		bottom: 10%;
-	}
-
 	.ui-autocomplete-input {
-		width: 85%;
+		width: 80%;
+	}
+
+	.ui-menu {
+		width: 45%;
 	}
 
 	.foursquare-logo {
 		bottom: 2%;
-		width: 12.5em;
+		width: 12em;
 	}
 }
