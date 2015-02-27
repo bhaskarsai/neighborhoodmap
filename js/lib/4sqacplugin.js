@@ -123,7 +123,7 @@
 		.data('ui-autocomplete')._renderItem = function (ul, item) {
 			return $('<li></li>')
 			.data('ui-autocomplete-item', item)
-			.append('<a>' + getAutocompleteText(item) + '</a>')
+			.append('<a href="#" style="text-decoration:none">' + getAutocompleteText(item) + '</a>')
 			.appendTo(ul);
 		};
 
